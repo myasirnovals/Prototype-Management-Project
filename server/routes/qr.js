@@ -9,22 +9,22 @@ function sanitizeCode(code) {
   return code.trim();
 }
 
-const SAMPULKREATIV_API_URL = process.env.SAMPULKREATIV_API_URL || 'https://app.sampulkreativ.id/api/external/verify-qr';
-const SAMPULKREATIV_API_KEY = process.env.SAMPULKREATIV_API_KEY || 'sampulkreativ-pm-secret-2026';
+const EXTERNAL_AUTH_API_URL = process.env.EXTERNAL_AUTH_API_URL || process.env.SAMPULKREATIV_API_URL || '';
+const EXTERNAL_AUTH_API_KEY = process.env.EXTERNAL_AUTH_API_KEY || process.env.SAMPULKREATIV_API_KEY || '';
 
 /**
- * Panggil API eksternal Sampulkreativ untuk memverifikasi QR Code
- * POST https://app.sampulkreativ.id/api/external/verify-qr
- * Headers: Content-Type: application/json, x-api-key: sampulkreativ-pm-secret-2026
- * Body: { qr_data: "..." }
+ * Panggil API eksternal (jika dikonfigurasi) untuk memverifikasi QR Code
  */
 async function verifyWithSampulkreativApi(qrData) {
+  if (!EXTERNAL_AUTH_API_URL) {
+    return { success: false, notConfigured: true, error: 'External auth API tidak dikonfigurasi' };
+  }
   try {
-    const res = await fetch(SAMPULKREATIV_API_URL, {
+    const res = await fetch(EXTERNAL_AUTH_API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': SAMPULKREATIV_API_KEY
+        ...(EXTERNAL_AUTH_API_KEY ? { 'x-api-key': EXTERNAL_AUTH_API_KEY } : {})
       },
       body: JSON.stringify({ qr_data: qrData })
     });
@@ -65,11 +65,11 @@ function normalizeSampulkreativUser(payload, rawQr) {
   };
 
   const rawUsername = getProp(['username', 'user_name', 'nama_pengguna', 'login', 'uname', 'account']) || '';
-  const rawName = getProp(['name', 'nama', 'full_name', 'fullname', 'nama_lengkap', 'display_name']) || rawUsername || 'Pengguna Sampulkreativ';
+  const rawName = getProp(['name', 'nama', 'full_name', 'fullname', 'nama_lengkap', 'display_name']) || rawUsername || 'Pengguna Proyek';
   const rawRole = (getProp(['role', 'peran', 'user_role', 'role_name']) || 'user').toLowerCase();
   const rawNip = getProp(['nip', 'nisn', 'nomor_induk', 'id_card', 'nik']) || '';
 
-  // Normalisasi role ke 4 role valid Creative Office: admin | manajement-project | qa | user
+  // Normalisasi role ke 4 role valid: admin | manajement-project | qa | user
   let normalizedRole = 'user';
   if (rawRole.includes('admin') || rawRole === 'direktur' || rawRole === 'executive') {
     normalizedRole = 'admin';
@@ -80,11 +80,11 @@ function normalizeSampulkreativUser(payload, rawQr) {
   }
 
   const rawJobdesk = getProp(['jobdesk', 'job', 'posisi', 'jabatan', 'title', 'position']) ||
-    (normalizedRole === 'admin' ? 'Admin & Managing Director' : 
+    (normalizedRole === 'admin' ? 'Admin & Project Lead' : 
      normalizedRole === 'manajement-project' ? 'Project Manager' : 
      normalizedRole === 'qa' ? 'QA Lead' : 'Anggota Tim & Kontributor');
 
-  const rawEmail = getProp(['email']) || (rawName ? `${rawName.toLowerCase().replace(/[^a-z0-9]/g, '.')}@sampulkreativ.id` : null);
+  const rawEmail = getProp(['email']) || (rawName ? `${rawName.toLowerCase().replace(/[^a-z0-9]/g, '.')}@project.local` : null);
   const rawAvatar = getProp(['avatar', 'avatar_url', 'photo', 'image']) || 
     `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(rawName)}`;
   const rawId = getProp(['id', 'userId', 'user_id']) || `usr-${Date.now().toString().slice(-6)}`;
@@ -203,12 +203,9 @@ async function ensureDefaultUsers() {
       const seedQuery = `
         INSERT INTO users (id, name, role, title, jobdesk, email, avatar, workspace_access)
         VALUES 
-          ('usr-001', 'Dr. Hendra Wijaya', 'admin', 'Admin & Managing Director', 'Direktur Eksekutif & Manajemen Operasional', 'hendra.wijaya@sampulkreativ.id', '', '["ruangkreasi", "layarbaca"]'::jsonb),
-          ('usr-002', 'Sari Rahmawati', 'manajement-project', 'Project Manager', 'Lead Operasional & Sprint Coordinator', 'sari.rahmawati@sampulkreativ.id', '', '["ruangkreasi", "layarbaca"]'::jsonb),
-          ('usr-003', 'Budi Pratama', 'qa', 'QA Lead', 'Quality Assurance & Kelaikan Deliverable', 'budi.pratama@sampulkreativ.id', '', '["ruangkreasi"]'::jsonb),
-          ('usr-004', 'Dimas Anggara', 'user', 'Creative Specialist', 'Desain Grafis & Konten Visual 3D', 'dimas.anggara@sampulkreativ.id', '', '["ruangkreasi"]'::jsonb, '{\n  "nama": "Dimas Anggara",\n  "role": "User",\n  "jobdesk": "Desain Grafis & Konten Visual 3D"\n}'),
-          ('usr-005', 'Rizky Firmansyah', 'user', 'UI/UX Designer', 'Perancangan Antarmuka & Prototipe Web', 'rizky.firmansyah@sampulkreativ.id', '', '["ruangkreasi"]'::jsonb, '{\n  "nama": "Rizky Firmansyah",\n  "role": "User",\n  "jobdesk": "Perancangan Antarmuka & Prototipe Web"\n}'),
-          ('usr-006', 'Dewi Sartika', 'user', 'Content Strategist', 'Penulisan Naskah & Strategi Publikasi', 'dewi.sartika@sampulkreativ.id', '', '["ruangkreasi"]'::jsonb, '{\n  "nama": "Dewi Sartika",\n  "role": "User",\n  "jobdesk": "Penulisan Naskah & Strategi Publikasi"\n}')
+          ('usr-001', 'Project Lead', 'admin', 'Project Lead', 'Lead & Koordinator Proyek', 'admin@project.local', '', '["workspace-capstone", "proj-main"]'::jsonb),
+          ('usr-002', 'Project Manager', 'manajement-project', 'Project Manager', 'Sprint Coordinator', 'pm@project.local', '', '["workspace-capstone", "proj-main"]'::jsonb),
+          ('usr-003', 'Team Member', 'user', 'Software Developer', 'Pengembang Perangkat Lunak', 'member@project.local', '', '["workspace-capstone", "proj-main"]'::jsonb)
         ON CONFLICT (id) DO UPDATE SET
           qr_data = EXCLUDED.qr_data,
           jobdesk = EXCLUDED.jobdesk,
@@ -273,7 +270,7 @@ function extractUserFromPayload(raw) {
   const jobdesk = getKey(['jobdesk', 'job', 'title', 'jabatan', 'posisi', 'jobdesk/posisi', 'jobdesk / posisi', 'posisi / jobdesk']) || 'Anggota Tim & Kontributor';
   const id = getKey(['id', 'userid', 'user_id']);
   const finalId = id || `usr-${Date.now().toString().slice(-6)}`;
-  const email = getKey(['email']) || (name ? `${name.toLowerCase().replace(/[^a-z0-9]/g, '.')}${role.toLowerCase() === 'admin' ? '.admin' : ''}@sampulkreativ.id` : null);
+  const email = getKey(['email']) || (name ? `${name.toLowerCase().replace(/[^a-z0-9]/g, '.')}${role.toLowerCase() === 'admin' ? '.admin' : ''}@project.local` : null);
   const avatar = getKey(['avatar']);
 
   if (name) {
@@ -403,7 +400,7 @@ router.post('/register-user', async (req, res) => {
     const role = (extracted.role || req.body.role || req.body.Role || 'user').toLowerCase();
     const jobdesk = extracted.jobdesk || req.body.jobdesk || req.body.Jobdesk || 'Anggota Tim & Kontributor';
     const title = extracted.title || req.body.title || jobdesk;
-    const email = extracted.email || req.body.email || (name ? `${name.toLowerCase().replace(/[^a-z0-9]/g, '.')}@sampulkreativ.id` : '');
+    const email = extracted.email || req.body.email || (name ? `${name.toLowerCase().replace(/[^a-z0-9]/g, '.')}@project.local` : '');
     const avatar = extracted.avatar || req.body.avatar || (name ? `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(name)}` : '');
     const userId = extracted.id || req.body.id || `usr-${Date.now().toString().slice(-6)}`;
     const qrData = req.body.qr_data || req.body.rawCode || extracted.qr_data || (typeof req.body === 'string' ? req.body : null);

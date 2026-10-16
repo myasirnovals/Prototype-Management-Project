@@ -2,7 +2,7 @@
 **Domain:** creativeoffice.app  
 Pilihan creativeoffice.app sangat ideal karena ekstensi ini mewajibkan protokol keamanan HTTPS secara *built-in* untuk melindungi data internal perusahaan, sekaligus memberikan identitas modern yang selaras dengan aplikasi produktivitas bergerak berbasis web yang sedang kamu kembangkan. 
 
-**Arsitektur Portal Manajemen Proyek Internal: Sampulkreativ Technology**
+**Arsitektur Portal Manajemen Proyek: Capstone Project Hub**
 
 **1\. Gerbang Masuk & Keamanan (Barcode & Auth)**
 

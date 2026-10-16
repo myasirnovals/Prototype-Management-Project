@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>Registrasi Akun QR — Creative Office Sampulkreativ</title>
-  <meta name="description" content="Pendaftaran akun pengguna baru dan pengikatan kode QR fisik ke database PostgreSQL Creative Office." />
+  <title>Registrasi Akun QR — Portal Manajemen Proyek</title>
+  <meta name="description" content="Pendaftaran akun pengguna baru dan pengikatan kode QR fisik ke database PostgreSQL Supabase." />
   
   <!-- Brand Favicon -->
   <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
@@ -174,7 +174,7 @@
                 id="input-reg-email"
                 name="email"
                 type="email"
-                placeholder="nama.lengkap@sampulkreativ.id"
+                placeholder="nama@email.com"
                 class="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 focus:border-purple-600 rounded-xl text-[12.5px] text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition-all font-medium"
               />
             </div>
@@ -292,7 +292,7 @@
     if (parsedPayload.email) {
       emailInput.value = parsedPayload.email;
     } else if (nameInput.value) {
-      emailInput.value = `${nameInput.value.toLowerCase().replace(/[^a-z0-9]/g, '.')}@sampulkreativ.id`;
+      emailInput.value = `${nameInput.value.toLowerCase().replace(/[^a-z0-9]/g, '.')}@project.local`;
     }
 
     // Auto-update email on name input
@@ -301,7 +301,7 @@
     nameInput.addEventListener('input', () => {
       if (!emailTouched) {
         const val = nameInput.value.trim().toLowerCase().replace(/[^a-z0-9]/g, '.');
-        emailInput.value = val ? `${val}@sampulkreativ.id` : '';
+        emailInput.value = val ? `${val}@project.local` : '';
       }
     });
 
@@ -369,7 +369,7 @@
             role,
             jobdesk,
             title: jobdesk,
-            email: email || `${name.toLowerCase().replace(/[^a-z0-9]/g, '.')}@sampulkreativ.id`,
+            email: email || `${name.toLowerCase().replace(/[^a-z0-9]/g, '.')}@project.local`,
             avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(name)}`,
             assignedTaskId: 'none',
             assignedTaskTitle: 'Belum Diberi Tugas (Menunggu Admin)',
@@ -431,7 +431,7 @@
             role,
             jobdesk,
             title: jobdesk,
-            email: email || `${name.toLowerCase().replace(/[^a-z0-9]/g, '.')}@sampulkreativ.id`,
+            email: email || `${name.toLowerCase().replace(/[^a-z0-9]/g, '.')}@project.local`,
             avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(name)}`,
             workspace_access: ['ruangkreasi', 'panen-kunci'],
             boundDeviceId: apiService.getDeviceId(),

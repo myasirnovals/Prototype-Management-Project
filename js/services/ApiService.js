@@ -581,13 +581,7 @@ export class ApiService {
   }
 
   /**
-   * Verifikasi QR Code ke API Eksternal Sampulkreativ
-   * Endpoint: POST https://app.sampulkreativ.id/api/external/verify-qr
-   * Headers: x-api-key: sampulkreativ-pm-secret-2026, Content-Type: application/json
-   * Body: { "qr_data": "<hasil_scan_kamera>" }
-   * 
-   * Otomatis disinkronkan langsung ke database Supabase (tabel users) melalui backend gateway
-   * atau direct fallback jika backend lokal offline.
+   * Verifikasi QR Code ke backend dan database Supabase
    * @param {string} qrData
    * @param {Object} [options]
    */
@@ -602,7 +596,6 @@ export class ApiService {
       forceSwitch: Boolean(options.forceSwitch)
     };
 
-    // 1. Panggil backend gateway lokal (yang menyambung ke Supabase & Sampulkreativ API)
     try {
       const result = await this.safeFetch('/qr/verify-sampulkreativ', {
         method: 'POST',
@@ -624,104 +617,10 @@ export class ApiService {
         };
       }
 
-      if (result.status === 404) {
-        console.info('[ApiService] Backend gateway mengembalikan 404, mencoba direct check ke Sampulkreativ API...');
-      } else if (result.status && result.status !== 500) {
-        return result.data || { success: false, error: `Verifikasi gagal (${result.status})` };
-      }
+      return result.data || { success: false, error: `Verifikasi gagal (${result.status})` };
     } catch (localErr) {
-      console.warn('[ApiService] Backend lokal gateway tidak terhubung:', localErr.message);
-    }
-
-    // 2. Direct Fallback: Langsung panggil API Eksternal Sampulkreativ dari client
-    // Endpoint: POST https://app.sampulkreativ.id/api/external/verify-qr
-    // Header: x-api-key: sampulkreativ-pm-secret-2026
-    try {
-      const directRes = await fetch('https://app.sampulkreativ.id/api/external/verify-qr', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': 'sampulkreativ-pm-secret-2026'
-        },
-        body: JSON.stringify({ qr_data: cleanQr })
-      });
-
-      const directJson = await directRes.json();
-      if (directRes.ok && directJson && directJson.success !== false && (directJson.data || directJson.user)) {
-        const rawUser = (directJson.data && directJson.data.user) || directJson.data || directJson.user || directJson;
-
-        const getField = (keys) => {
-          for (const k of keys) {
-            for (const key of Object.keys(rawUser)) {
-              if (key.toLowerCase() === k.toLowerCase() && rawUser[key]) {
-                return String(rawUser[key]).trim();
-              }
-            }
-          }
-          return '';
-        };
-
-        const rawUsername = getField(['username', 'user_name', 'nama_pengguna', 'login', 'uname', 'account']);
-        const rawName = getField(['name', 'nama', 'full_name', 'fullname', 'nama_lengkap', 'display_name']) || rawUsername || 'Pengguna Sampulkreativ';
-        const rawRole = (getField(['role', 'peran', 'user_role']) || 'user').toLowerCase();
-        const rawNip = getField(['nip', 'nisn', 'nomor_induk', 'id_card', 'nik']);
-
-        let normalizedRole = 'user';
-        if (rawRole.includes('admin') || rawRole === 'direktur' || rawRole === 'executive') {
-          normalizedRole = 'admin';
-        } else if (rawRole.includes('pm') || rawRole.includes('project') || rawRole.includes('manajer') || rawRole.includes('manager')) {
-          normalizedRole = 'manajement-project';
-        } else if (rawRole.includes('qa') || rawRole.includes('quality') || rawRole.includes('tester')) {
-          normalizedRole = 'qa';
-        }
-
-        const rawJobdesk = getField(['jobdesk', 'job', 'posisi', 'jabatan', 'title', 'position']) ||
-          (normalizedRole === 'admin' ? 'Admin & Managing Director' :
-           normalizedRole === 'manajement-project' ? 'Project Manager' :
-           normalizedRole === 'qa' ? 'QA Lead' : 'Anggota Tim & Kontributor');
-
-        const rawEmail = getField(['email']) || (rawName ? `${rawName.toLowerCase().replace(/[^a-z0-9]/g, '.')}@sampulkreativ.id` : null);
-        const rawAvatar = getField(['avatar', 'avatar_url', 'photo', 'image']) || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(rawName)}`;
-
-        const normalized = {
-          ...rawUser,
-          id: rawUser.id || rawUser.userId || `usr-${Date.now().toString().slice(-6)}`,
-          name: rawName,
-          username: rawUsername || (rawName ? rawName.toLowerCase().replace(/[^a-z0-9]/g, '') : ''),
-          nip: rawNip,
-          role: normalizedRole,
-          jobdesk: rawJobdesk,
-          title: rawJobdesk,
-          email: rawEmail,
-          avatar: rawAvatar,
-          qr_data: cleanQr,
-          workspace_access: ['ruangkreasi', 'panen-kunci']
-        };
-
-        // Otomatis sinkronkan langsung ke database Supabase
-        try {
-          await this.registerUser(normalized);
-        } catch (syncErr) {
-          console.warn('[ApiService] Sinkronisasi ke database Supabase:', syncErr);
-        }
-
-        return {
-          success: true,
-          source: 'direct-sampulkreativ-api',
-          data: normalized
-        };
-      }
-
-      return {
-        success: false,
-        error: directJson?.error || `Pengguna tidak ditemukan atau QR Code belum terdaftar di Sampulkreativ`
-      };
-    } catch (directErr) {
-      console.error('[ApiService] Gagal menghubungi API Sampulkreativ secara langsung:', directErr.message);
-      return {
-        success: false,
-        error: `Koneksi API Sampulkreativ gagal: ${directErr.message}`
-      };
+      console.warn('[ApiService] Backend gateway offline:', localErr.message);
+      return { success: false, isOffline: true, error: 'Backend gateway offline' };
     }
   }
 }

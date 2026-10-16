@@ -52,16 +52,6 @@ async function generateAllUserQRs() {
         }
       });
 
-      // Also copy as standard default if role is user or admin
-      if (u.role === 'user') {
-        fs.writeFileSync(path.join(outputDir, `qr_${safeName}.svg`), svgString, 'utf8');
-        await QRCode.toFile(path.join(outputDir, `qr_${safeName}.png`), payload, {
-          type: 'png',
-          margin: 2,
-          width: 320,
-          color: { dark: '#0f172a', light: '#ffffff' }
-        });
-      }
 
       console.log(`✅ [${u.name}] [${(u.role || '').toUpperCase()}] (${u.jobdesk}) -> Disimpan:`);
       console.log(`   - SVG: public/qrcodes/qr_${safeName}${roleSuffix}.svg`);

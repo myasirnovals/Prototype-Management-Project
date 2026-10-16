@@ -257,7 +257,7 @@ export class AuthView extends BaseView {
                   SECURE SSL
                 </span>
               </div>
-              <p class="font-caption-meta text-[11.5px] text-purple-900 font-medium">by Sampulkreativ Technology</p>
+              <p class="font-caption-meta text-[11.5px] text-purple-900 font-medium">Project Management Hub</p>
             </div>
 
             <!-- Scanner Viewfinder Component (Portrait) -->
@@ -1455,7 +1455,7 @@ export class AuthView extends BaseView {
       // Otomatis disinkronkan langsung ke database Supabase (tabel users)
       try {
         if (feedback) {
-          feedback.innerHTML = `<span class="text-purple-600 dark:text-purple-400 font-bold animate-pulse">🔍 Memverifikasi QR ke API Sampulkreativ & Supabase...</span>`;
+          feedback.innerHTML = `<span class="text-purple-600 dark:text-purple-400 font-bold animate-pulse">🔍 Memverifikasi QR ke Database Supabase...</span>`;
         }
 
         const sampulRes = await apiService.verifySampulkreativQr(cleanCode, { forceSwitch });
@@ -1479,7 +1479,7 @@ export class AuthView extends BaseView {
           } catch (e) {}
 
           if (feedback) {
-            feedback.innerHTML = `<span class="text-emerald-500 font-bold animate-pulse">✅ Terverifikasi via Sampulkreativ API!</span> Tersambung ke Supabase...`;
+            feedback.innerHTML = `<span class="text-emerald-500 font-bold animate-pulse">✅ Terverifikasi!</span> Tersambung ke Supabase...`;
           }
           // Pastikan selalu tersinkronisasi ke database Supabase (tabel users)
           try {
@@ -1596,7 +1596,7 @@ export class AuthView extends BaseView {
           const role = getKey(['role', 'peran']) || 'user';
           const jobdesk = getKey(['jobdesk', 'job', 'title', 'jabatan', 'posisi', 'jobdesk/posisi', 'jobdesk / posisi', 'posisi / jobdesk']) || 'Anggota Tim & Kontributor';
           const finalId = `usr-${Date.now().toString().slice(-6)}`;
-          const email = getKey(['email']) || (name ? `${name.toLowerCase().replace(/[^a-z0-9]/g, '.')}${role.toLowerCase() === 'admin' ? '.admin' : ''}@sampulkreativ.id` : null);
+          const email = getKey(['email']) || (name ? `${name.toLowerCase().replace(/[^a-z0-9]/g, '.')}${role.toLowerCase() === 'admin' ? '.admin' : ''}@project.local` : null);
 
           if (name) {
             parsedUser = {
@@ -1687,7 +1687,7 @@ export class AuthView extends BaseView {
               workspaceAccess: (matchedManaged.workspaceAccess && matchedManaged.workspaceAccess.length > 0) ? matchedManaged.workspaceAccess : (matchedManaged.assignedProjects || [matchedManaged.assignedWorkspace || matchedManaged.assignedProjectId]),
               assignedTaskId: matchedManaged.assignedTaskId,
               assignedTaskTitle: matchedManaged.assignedTaskTitle,
-              email: `${matchedManaged.fullName.toLowerCase().replace(/[^a-z0-9]/g, '.')}@sampulkreativ.id`,
+              email: `${matchedManaged.fullName.toLowerCase().replace(/[^a-z0-9]/g, '.')}@project.local`,
               qr_data: codeToReg
             };
           }
@@ -1704,7 +1704,7 @@ export class AuthView extends BaseView {
               role: 'user',
               jobdesk: 'Anggota Tim & Kontributor',
               title: 'Anggota Tim & Kontributor',
-              email: `${candidateName.toLowerCase().replace(/[^a-z0-9]/g, '.')}@sampulkreativ.id`,
+              email: `${candidateName.toLowerCase().replace(/[^a-z0-9]/g, '.')}@project.local`,
               qr_data: rawCodeStr
             };
           }
@@ -1712,7 +1712,7 @@ export class AuthView extends BaseView {
 
         if (!userToReg || !userToReg.name) {
           if (feedback) {
-            feedback.innerHTML = `<span class="text-amber-400 font-bold">⚠️ QR belum terdaftar di Sampulkreativ.</span> <button id="btn-quick-enter-unregistered-qr" class="ml-1.5 underline font-bold text-white hover:text-purple-300 cursor-pointer">Masuk sebagai Pengguna Baru</button>`;
+            feedback.innerHTML = `<span class="text-amber-400 font-bold">⚠️ QR belum terdaftar di sistem.</span> <button id="btn-quick-enter-unregistered-qr" class="ml-1.5 underline font-bold text-white hover:text-purple-300 cursor-pointer">Masuk sebagai Pengguna Baru</button>`;
             const quickBtn = this.element.querySelector('#btn-quick-enter-unregistered-qr');
             if (quickBtn) {
               quickBtn.onclick = () => {
@@ -1721,7 +1721,7 @@ export class AuthView extends BaseView {
                   name: 'Anggota Baru',
                   role: 'user',
                   jobdesk: 'Anggota Tim & Kontributor',
-                  email: `member.${Date.now().toString().slice(-4)}@sampulkreativ.id`,
+                  email: `member.${Date.now().toString().slice(-4)}@project.local`,
                   qr_data: codeToReg
                 };
                 autoRegisterAndEnter(codeToReg, guestUser);
@@ -1729,7 +1729,7 @@ export class AuthView extends BaseView {
             }
           }
           if (this.notificationService) {
-            this.notificationService.warning('Kode QR belum terdaftar di sistem Sampulkreativ.');
+            this.notificationService.warning('Kode QR belum terdaftar di sistem.');
           }
           setTimeout(() => {
             this.isScanning = false;
@@ -1756,7 +1756,7 @@ export class AuthView extends BaseView {
           role: (userToReg.role || 'user').toLowerCase(),
           jobdesk: userToReg.jobdesk || 'Anggota Tim & Kontributor',
           title: userToReg.jobdesk || 'Anggota Tim & Kontributor',
-          email: userToReg.email || `${userToReg.name.toLowerCase().replace(/[^a-z0-9]/g, '.')}@sampulkreativ.id`,
+          email: userToReg.email || `${userToReg.name.toLowerCase().replace(/[^a-z0-9]/g, '.')}@project.local`,
           avatar: userToReg.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(userToReg.name)}`,
           qr_data: codeToReg,
           rawCode: codeToReg,
@@ -2302,7 +2302,7 @@ export class AuthView extends BaseView {
       });
     }
 
-    // Admin Login dengan Username & Password (usn: admin, password: sampulkreativ2026)
+    // Admin Login dengan Username & Password (usn: admin, password: admin123)
     const btnAdminLoginModalTrigger = this.element.querySelector('#btn-admin-login-modal-trigger');
     const adminPwdModal = this.element.querySelector('#modal-admin-password-prompt');
     const adminUsnInput = this.element.querySelector('#input-admin-username');
@@ -2353,7 +2353,7 @@ export class AuthView extends BaseView {
           adminPwdError.classList.remove('hidden');
         }
         if (this.notificationService) {
-          this.notificationService.warning('Kredensial admin salah! Gunakan usn: admin & password: sampulkreativ2026');
+          this.notificationService.warning('Kredensial admin salah! Gunakan usn: admin & password: admin123');
         }
         return;
       }

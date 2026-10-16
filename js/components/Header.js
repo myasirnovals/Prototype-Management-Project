@@ -117,7 +117,7 @@ export class Header {
               <img alt="CreativOffice Logo" class="header-logo-img w-8 h-8 object-contain rounded-lg shadow-sm shrink-0" style="width: 32px; height: 32px; min-width: 32px; min-height: 32px; max-width: 32px; max-height: 32px;" src="/assets/logo.png" />
               <div class="flex flex-col shrink-0">
                 <span class="font-headline-md text-[13.5px] font-extrabold text-white leading-none tracking-tight">CreativOffice</span>
-                <span class="text-[9.5px] font-medium text-white/60 leading-tight mt-0.5">by Sampulkreativ</span>
+                <span class="text-[9.5px] font-medium text-white/60 leading-tight mt-0.5">Project Portal</span>
               </div>
             </div>
 
@@ -225,7 +225,7 @@ export class Header {
                   <div class="min-w-0 flex-1">
                     <span class="text-[9.5px] text-white/50 uppercase font-bold tracking-wider">Profil Anda</span>
                     <p class="text-[13px] font-bold text-white mt-0.5 truncate">${user.name}</p>
-                    <p class="text-[11px] text-white/70 truncate">${user.email || 'user@sampulkreativ.id'}</p>
+                    <p class="text-[11px] text-white/70 truncate">${user.email || 'user@project.local'}</p>
                     <span class="inline-block mt-0.5 px-2 py-0.2 rounded-full ${isUserRole ? 'bg-sky-500/20 text-sky-300 border border-sky-400/30' : 'bg-purple-500/20 text-purple-300 border border-purple-400/30'} text-[9.5px] font-bold capitalize">
                       ${isUserRole ? 'Member • Akses Terbatas' : 'Admin • Hak Penuh Ubah Apapun'}
                     </span>

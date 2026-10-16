@@ -78,12 +78,9 @@ CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 -- Seed Pengguna Awal
 INSERT INTO users (id, name, role, title, jobdesk, email, avatar, workspace_access, qr_data)
 VALUES 
-  ('usr-001', 'Dr. Hendra Wijaya', 'admin', 'Admin & Managing Director', 'Direktur Eksekutif & Manajemen Operasional', 'hendra.wijaya@sampulkreativ.id', '', '["ruangkreasi", "layarbaca"]'::jsonb, NULL),
-  ('usr-002', 'Sari Rahmawati', 'manajement-project', 'Project Manager', 'Lead Operasional & Sprint Coordinator', 'sari.rahmawati@sampulkreativ.id', '', '["ruangkreasi", "layarbaca"]'::jsonb, NULL),
-  ('usr-003', 'Budi Pratama', 'qa', 'QA Lead', 'Quality Assurance & Kelaikan Deliverable', 'budi.pratama@sampulkreativ.id', '', '["ruangkreasi"]'::jsonb, NULL),
-  ('usr-004', 'Dimas Anggara', 'user', 'Creative Specialist', 'Desain Grafis & Konten Visual 3D', 'dimas.anggara@sampulkreativ.id', '', '["ruangkreasi"]'::jsonb, '{\n  "nama": "Dimas Anggara",\n  "role": "User",\n  "jobdesk": "Desain Grafis & Konten Visual 3D"\n}'),
-  ('usr-005', 'Rizky Firmansyah', 'user', 'UI/UX Designer', 'Perancangan Antarmuka & Prototipe Web', 'rizky.firmansyah@sampulkreativ.id', '', '["ruangkreasi"]'::jsonb, '{\n  "nama": "Rizky Firmansyah",\n  "role": "User",\n  "jobdesk": "Perancangan Antarmuka & Prototipe Web"\n}'),
-  ('usr-006', 'Dewi Sartika', 'user', 'Content Strategist', 'Penulisan Naskah & Strategi Publikasi', 'dewi.sartika@sampulkreativ.id', '', '["ruangkreasi"]'::jsonb, '{\n  "nama": "Dewi Sartika",\n  "role": "User",\n  "jobdesk": "Penulisan Naskah & Strategi Publikasi"\n}')
+  ('usr-001', 'Project Lead', 'admin', 'Project Lead', 'Lead & Koordinator Proyek', 'admin@project.local', '', '["workspace-capstone", "proj-main"]'::jsonb, '@admin'),
+  ('usr-002', 'Project Manager', 'manajement-project', 'Project Manager', 'Sprint Coordinator', 'pm@project.local', '', '["workspace-capstone", "proj-main"]'::jsonb, '@pm'),
+  ('usr-003', 'Team Member', 'user', 'Software Developer', 'Pengembang Perangkat Lunak', 'member@project.local', '', '["workspace-capstone", "proj-main"]'::jsonb, '@member')
 ON CONFLICT (id) DO UPDATE SET
   name = EXCLUDED.name,
   role = EXCLUDED.role,

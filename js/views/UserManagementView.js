@@ -470,7 +470,7 @@ export class UserManagementView extends BaseView {
                 <span class="px-2 py-0.5 rounded-full text-[9.5px] font-bold uppercase bg-purple-500/20 text-purple-300 border border-purple-400/30">CreativOffice</span>
               </div>
               <h1 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight mt-1 drop-shadow-sm">Manajemen Pengguna</h1>
-              <p class="text-xs text-white/60 mt-1">Kelola akun karyawan, siswa PKL, penugasan papan kanban & tugas, serta kartu scan QR SampulKreativ</p>
+              <p class="text-xs text-white/60 mt-1">Kelola akun anggota tim, penugasan papan kanban & tugas, serta kartu scan QR tim proyek</p>
             </div>
 
             <div class="flex items-center gap-2.5">
@@ -863,7 +863,7 @@ export class UserManagementView extends BaseView {
                   ${this._renderBoardOptionsHtml(availableBoards, [])}
                 </select>
 
-                <p class="text-[9.5px] sm:text-[10px] text-white/50 mt-1">Saat scan QR SampulKreativ, pengguna memiliki hak akses ke seluruh papan yang dipilih.</p>
+                <p class="text-[9.5px] sm:text-[10px] text-white/50 mt-1">Saat scan QR, pengguna memiliki hak akses ke seluruh papan yang dipilih.</p>
               </div>
 
               <div>

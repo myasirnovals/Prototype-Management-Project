@@ -709,7 +709,7 @@ export class QRCodeDashboardView extends BaseView {
       if (userRole === 'user') {
         const targetName = matchedData.name || 'Anggota Tim';
         const targetJobdesk = matchedData.jobdesk || matchedData.title || 'Creative Specialist';
-        const targetEmail = matchedData.email || `${targetName.toLowerCase().replace(/[^a-z0-9]/g, '.')}@sampulkreativ.id`;
+        const targetEmail = matchedData.email || `${targetName.toLowerCase().replace(/[^a-z0-9]/g, '.')}@project.local`;
         const targetAvatar = matchedData.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(targetName)}`;
         const targetId = matchedData.id && matchedData.id.startsWith('usr-') ? matchedData.id : `usr-${Date.now().toString().slice(-6)}`;
 
@@ -827,7 +827,7 @@ export class QRCodeDashboardView extends BaseView {
               </div>
               <p class="text-xs font-semibold text-emerald-700 dark:text-emerald-400 mt-0.5">${data.jobdesk || data.title || 'Creative Specialist'}</p>
               <div class="flex items-center gap-3 text-[11px] text-slate-500 dark:text-slate-400 mt-1.5 truncate">
-                <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[13px]">mail</span>${data.email || 'user@sampulkreativ.id'}</span>
+                <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[13px]">mail</span>${data.email || 'user@project.local'}</span>
                 <span>•</span>
                 <span class="font-mono text-slate-400">${data.id}</span>
               </div>

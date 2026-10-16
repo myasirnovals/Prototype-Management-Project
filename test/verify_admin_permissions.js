@@ -7,7 +7,7 @@ console.log('--- TESTING ADMIN ROLE PERMISSIONS & CAPABILITIES ---');
 const adminUser = new User({
   id: 'usr-001',
   name: 'Dr. Hendra Wijaya',
-  email: 'hendra.wijaya@sampulkreativ.id',
+  email: 'admin@project.local',
   role: 'admin',
   title: 'Admin & Managing Director',
   workspaceAccess: ['ruangkreasi', 'panen-kunci', 'sharinginaja']

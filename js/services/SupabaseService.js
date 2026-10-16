@@ -1,9 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Default Supabase Configuration for CreativeOffice
-const DEFAULT_SUPABASE_URL = 'https://ysqqbygshqyhfhwdcswd.supabase.co';
-
-// Read Anon Key from Vite env or localStorage cache
+// Read Supabase credentials from Vite environment or localStorage
 function getAnonKey() {
   if (typeof window !== 'undefined') {
     const fromEnv = (import.meta && import.meta.env && import.meta.env.VITE_SUPABASE_ANON_KEY) || '';
@@ -18,8 +15,10 @@ function getSupabaseUrl() {
   if (typeof window !== 'undefined') {
     const fromEnv = (import.meta && import.meta.env && import.meta.env.VITE_SUPABASE_URL) || '';
     if (fromEnv && fromEnv.trim()) return fromEnv.trim();
+    const fromStorage = localStorage.getItem('supabase_url') || localStorage.getItem('sb_url') || '';
+    if (fromStorage && fromStorage.trim()) return fromStorage.trim();
   }
-  return DEFAULT_SUPABASE_URL;
+  return '';
 }
 
 /**
@@ -220,7 +219,7 @@ export class SupabaseService {
       const username = u.username || `@${fullName.toLowerCase().replace(/\s+/g, '')}`;
       const role = u.role || 'student';
       const position = u.position || u.title || 'Anggota Tim';
-      const email = u.email || `${username.replace(/^@/, '')}@sampulkreativ.id`;
+      const email = u.email || `${username.replace(/^@/, '')}@project.local`;
       const projId = u.assignedProjectId || 'creativoffice';
       const workspace = u.assignedWorkspace || projId;
       const boardName = u.assignedBoardName || 'CreativOffice';

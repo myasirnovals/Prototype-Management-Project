@@ -338,7 +338,7 @@ export class TaskService {
         id: 'task-co-02',
         code: '#CO-102',
         title: 'Integrasi Single Device Lock & Supabase Sync',
-        description: 'Validasi QR Sampulkreativ, penugasan otomatis tugas, dan enkripsi token.',
+        description: 'Validasi QR Code Autentikasi, penugasan otomatis tugas, dan enkripsi token.',
         workspace: 'creativoffice',
         board: 'creativoffice',
         status: 'review-qa',

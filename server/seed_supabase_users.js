@@ -12,7 +12,7 @@ async function syncAllToSupabase() {
 
   if (!connStatus.connected) {
     console.warn('⚠️ Tidak ada koneksi aktif ke PostgreSQL / Supabase:', connStatus.error);
-    console.log('ℹ️ Seluruh data (7 Pengguna, 6 Papan, 31 Tugas) telah tersimpan di server/data/*.json dan siap otomatis tersinkron saat koneksi DB aktif.');
+    console.log('ℹ️ Seluruh data telah tersimpan di server/data/*.json dan siap otomatis tersinkron saat koneksi DB aktif.');
     await pool.end();
     return;
   }
@@ -25,7 +25,7 @@ async function syncAllToSupabase() {
     const users = JSON.parse(fs.readFileSync(usersPath, 'utf8'));
     console.log(`\n👥 Menyinkronkan ${users.length} pengguna ke tabel public.users...`);
     for (const u of users) {
-      const email = u.email || `${u.username.replace(/^@/, '')}@sampulkreativ.id`;
+      const email = u.email || `${u.username.replace(/^@/, '')}@project.local`;
       const query = `
         INSERT INTO public.users (
           id, name, full_name, username, role, title, jobdesk, email,

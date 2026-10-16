@@ -195,7 +195,7 @@ export class DocumentService {
 
       <div class="text-[11.5px] leading-relaxed text-[#1e293b] flex flex-col gap-2.5 font-serif">
         <div class="text-justify">
-          <span class="font-bold">Membaca & Menimbang:</span> Permohonan Pengesahan Teknis Penyelenggaraan Reklame Elektronik LED Billboard Megatron Nomor Permohonan: <span class="font-mono font-semibold">SKT-OOH/RK-304/2024</span> tertanggal 10 Agustus 2024 oleh PT Sampulkreativ Technology.
+          <span class="font-bold">Membaca & Menimbang:</span> Permohonan Pengesahan Teknis Penyelenggaraan Sistem Manajemen Proyek Nomor Permohonan: <span class="font-mono font-semibold">PRJ-CP-001/2026</span> tertanggal 10 Oktober 2026 oleh Tim Pengembang Proyek.
         </div>
         
         <div class="text-center font-bold tracking-widest text-[11px] uppercase py-1 my-1 bg-[#f8fafc] border-y border-dashed border-[#cbd5e1]">
@@ -203,7 +203,7 @@ export class DocumentService {
         </div>
 
         <div class="bg-surface-container-low/60 p-3 rounded-lg border border-surface-border text-[11px] grid grid-cols-1 md:grid-cols-2 gap-y-1 gap-x-4 font-sans">
-          <div class="flex justify-between"><span class="text-text-secondary">Nama Badan Usaha:</span><span class="font-bold text-text-primary">PT Sampulkreativ Technology</span></div>
+          <div class="flex justify-between"><span class="text-text-secondary">Nama Tim / Organisasi:</span><span class="font-bold text-text-primary">Tim Capstone Project</span></div>
           <div class="flex justify-between"><span class="text-text-secondary">Pilar Kerja:</span><span class="font-semibold text-primary">RuangKreasi (Sprint 14)</span></div>
           <div class="flex justify-between"><span class="text-text-secondary">Titik Lokasi OOH:</span><span class="font-bold text-text-primary">Bundaran Hotel Indonesia (Slot #02)</span></div>
           <div class="flex justify-between"><span class="text-text-secondary">Area Pendukung:</span><span class="font-medium text-text-primary">Flyover Pangeran Antasari</span></div>
@@ -271,7 +271,7 @@ export class DocumentService {
         </p>
 
         <div class="bg-surface-container-low p-3.5 rounded-lg border border-surface-border text-[11.5px] grid grid-cols-2 gap-2 font-sans">
-          <div><strong>Pemohon:</strong> PT Sampulkreativ Technology</div>
+          <div><strong>Pemohon:</strong> Tim Capstone Project</div>
           <div><strong>Penanggung Jawab:</strong> Sari Rahmawati (Creative Lead)</div>
           <div><strong>Lokasi:</strong> Titik Bundaran HI & Koridor Flyover Antasari</div>
           <div><strong>Durasi:</strong> 15 Agustus 2024 - 31 Agustus 2024</div>
@@ -364,7 +364,7 @@ export class DocumentService {
       <div class="mt-5 text-[11.5px] leading-relaxed text-[#1e293b] flex flex-col gap-3 font-serif">
         <div class="bg-surface-container-low p-3.5 rounded-lg border border-surface-border text-[11.5px] grid grid-cols-2 gap-2 font-sans">
           <div><strong>Nomor Polis:</strong> POL-PL-OOH-2024-8831</div>
-          <div><strong>Tertanggung:</strong> PT Sampulkreativ Technology</div>
+          <div><strong>Tertanggung:</strong> Tim Capstone Project</div>
           <div><strong>Nilai Pertanggungan:</strong> Rp 5.000.000.000,- (5 Miliar)</div>
           <div><strong>Masa Pertanggungan:</strong> 01 Ags 2024 – 31 Des 2024</div>
         </div>

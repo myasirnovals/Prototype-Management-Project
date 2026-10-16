@@ -805,7 +805,7 @@ export class NewTaskModal extends BaseModal {
                 name: picName,
                 initials: picInitials,
                 role: picRole,
-                email: `${picName.toLowerCase().replace(/[^a-z0-9]/g, '')}@sampulkreativ.id`,
+                email: `${picName.toLowerCase().replace(/[^a-z0-9]/g, '')}@project.local`,
                 workspace: workspace
               };
               customMembers.unshift(newMemberObj);

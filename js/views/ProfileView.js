@@ -58,7 +58,7 @@ export class ProfileView extends BaseView {
   render() {
     const user = this.authService.getCurrentUser() || {
       name: 'User Anggota',
-      email: 'user@sampulkreativ.id',
+      email: 'user@project.local',
       role: 'user',
       title: 'Editor & Anggota Tim Proyek',
       avatar: '',
@@ -134,7 +134,7 @@ export class ProfileView extends BaseView {
                   </h2>
                   <p class="text-[13px] text-white/70 font-mono flex items-center justify-center sm:justify-start gap-1 mt-0.5" id="display-profile-email">
                     <span class="material-symbols-outlined text-[15px] text-purple-300">mail</span>
-                    <span>${this._escapeHtml(user.email || 'user@sampulkreativ.id')}</span>
+                    <span>${this._escapeHtml(user.email || 'user@project.local')}</span>
                   </p>
                 </div>
 

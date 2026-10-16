@@ -10,9 +10,8 @@ const projects = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'projec
 const tasks = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'tasks.json'), 'utf8'));
 
 let sql = `-- =========================================================================
--- SCRIPT INJEKSI OTOMATIS KE SUPABASE (CreativOffice)
+-- SCRIPT INJEKSI AWAL DATABASE SUPABASE
 -- Salin seluruh teks ini, buka menu SQL Editor di Supabase Dashboard, lalu klik Run
--- Project: ysqqbygshqyhfhwdcswd (Management Project)
 -- =========================================================================\n\n`;
 
 sql += `-- 1. STRUKTUR KOLOM TABEL LENGKAP
@@ -67,7 +66,7 @@ for (const u of users) {
   const tId = (u.assignedTaskId || 'all').replace(/'/g, "''");
   const tTitle = (u.assignedTaskTitle || '').replace(/'/g, "''");
   const dev = (u.device || 'Belum Terikat').replace(/'/g, "''");
-  const email = (u.email || (un.replace(/^@/, '') + '@sampulkreativ.id')).replace(/'/g, "''");
+  const email = (u.email || (un.replace(/^@/, '') + '@project.local')).replace(/'/g, "''");
   const wsAcc = JSON.stringify(u.workspaceAccess || [ws]).replace(/'/g, "''");
 
   sql += `INSERT INTO public.users (id, name, full_name, username, role, title, jobdesk, email, nip, position, school, assigned_project_id, assigned_workspace, assigned_board_name, assigned_task_id, assigned_task_title, device, is_device_bound, qr_data, workspace_access, updated_at)\n`;

@@ -86,7 +86,7 @@ export class CalendarService {
         dayName: 'Minggu',
         time: '19:00 - 21:00 WIB',
         pic: 'Seluruh Tim & Pimpinan Eksekutif',
-        location: 'Grand Command Center Sampulkreativ Lt. 8 & 14 Titik Jakarta',
+        location: 'Command Center & Ruang Kolaborasi Tim',
         status: 'menunggu',
         badge: 'MAJOR EVENT',
         taskRef: '#RK-310',

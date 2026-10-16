@@ -22,7 +22,7 @@ export class AuthService {
       role: 'admin',
       title: 'Admin & Managing Director',
       avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCs4GAAnGL_NHUUPqYj0DsaZfgUJ0aJqIfPALjUmgjIwshL2vKcWW1QxiECnTWYmy_gKEsorDZKRlitEXHTELFWCF2lnRdTxXPmDeQYKdyGkqR3nsE6I_aDuKoI2cPL5cVEsklM_qSX2Wnfjgs6327TJeHJMGlnraOZoJtjaJSbz488P9Kd_SGyHmmUieIr_VKl6Ym0ogBpgVhEF2RItwHr0k9GSset-BVhn3nAeGu7qpmWBRe51w-v',
-      email: 'hendra.wijaya@sampulkreativ.id',
+      email: 'admin@project.local',
       workspaceAccess: ['ruangkreasi', 'layarbaca', 'aikreativ', 'panen-kunci', 'sharinginaja']
     });
 
@@ -32,7 +32,7 @@ export class AuthService {
       role: 'manajement-project',
       title: 'Project Manager & Operations Lead',
       avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDtNieDrWnyDLMJXqM3DvOAGysS0-_-4mKZ9MeMc4v16u3TioliYvbQ8drEkBixw2pPn4LdcCGmEl82fy_4_TNOdQAFZlU8Ob19hCqTzAx_nFA7YMgISKHYVQQg0oQxg7VZ-zVeIylVe0vw9lcKD6kPPY6e4aoCjgAH0HT9qS8CetUaPi8c7IuLlUfKsLZsTQypHjtfUoRrhQ6cpoJ0OjA5Jz96RuIWZZOf37_qSRW1S2d3g-esoO4_',
-      email: 'sari.rahmawati@sampulkreativ.id',
+      email: 'pm@project.local',
       workspaceAccess: ['ruangkreasi', 'layarbaca', 'aikreativ', 'panen-kunci']
     });
 
@@ -42,7 +42,7 @@ export class AuthService {
       role: 'qa',
       title: 'QA Lead (Quality Assurance)',
       avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCkPYCmDB7ywNtTdvprqh9zeMhpfv9MxlkrN24s3xJOsa3z9onO_aY9EelsqGsv9ZrrEzZ56XOo7rFakJbUaP0lOnGkvPPxXVxhbaOKeMdgtY2RfSVw06ySE2-e9PBVb5QZT6H9CwjAI1CMupo9GrWobSHMyhmLPrP-AltvEFdf5E9TH9vF8WXrBieBz3hhFUbjzghoqYnaJspp3ModNNGh7wDMk8Lu1kvidFmkNwvedyQNf1zDlGJz',
-      email: 'budi.pratama@sampulkreativ.id',
+      email: 'qa@project.local',
       workspaceAccess: ['panen-kunci', 'aikreativ', 'ruangkreasi']
     });
 
@@ -52,7 +52,7 @@ export class AuthService {
       role: 'user',
       title: 'Creative Specialist & Contributor',
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&q=80',
-      email: 'dimas.anggara@sampulkreativ.id',
+      email: 'member@project.local',
       workspaceAccess: ['ruangkreasi', 'layarbaca']
     });
 
@@ -95,7 +95,7 @@ export class AuthService {
   /**
    * Verifikasi kredensial admin (username & password)
    * Username: admin
-   * Password: sampulkreativ2026 (atau admin123)
+   * Password: admin123 (atau admin)
    * @param {string} username
    * @param {string} password
    * @returns {boolean}
@@ -104,7 +104,7 @@ export class AuthService {
     if (!username || !password) return false;
     const cleanUsn = String(username).trim().toLowerCase();
     const cleanPwd = String(password).trim();
-    return cleanUsn === 'admin' && (cleanPwd === 'sampulkreativ2026' || cleanPwd === 'admin123');
+    return (cleanUsn === 'admin' || cleanUsn === 'lead') && (cleanPwd === 'admin123' || cleanPwd === 'admin');
   }
 
   /**
@@ -115,7 +115,7 @@ export class AuthService {
   verifyAdminPassword(password) {
     if (!password) return false;
     const clean = String(password).trim();
-    return clean === 'sampulkreativ2026' || clean === 'admin123' || clean === 'admin';
+    return clean === 'admin123' || clean === 'admin';
   }
 
   /**
@@ -414,7 +414,7 @@ export class AuthService {
     const finalId = id || `usr-${Date.now().toString().slice(-6)}`;
     const finalJobdesk = jobdesk || title || 'Creative Specialist';
     const finalTitle = title || finalJobdesk;
-    const finalEmail = email || `${(name || 'user').toLowerCase().replace(/[^a-z0-9]/g, '.')}@sampulkreativ.id`;
+    const finalEmail = email || `${(name || 'user').toLowerCase().replace(/[^a-z0-9]/g, '.')}@project.local`;
 
     // Cek apakah akun dengan nama atau email ini sudah terdaftar
     let existingIndex = this.customUsers.findIndex(u => u.id === finalId || (finalEmail && u.email === finalEmail) || (u.name && name && u.name.toLowerCase().trim() === name.toLowerCase().trim()));

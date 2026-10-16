@@ -1,8 +1,8 @@
-# Creative Office — Portal Manajemen Proyek Sampulkreativ Technology
+# Project Management Portal — Capstone Project Hub
 
-Portal manajemen proyek modern, aman, dan modular untuk Sampulkreativ Technology dengan dukungan Monday-style table, Kanban board, kalender multi-skala, dan pengesahan dokumen legalitas.
+Portal manajemen proyek modern, modular, dan responsif dengan dukungan Monday-style table, Kanban board, kalender tugas, dan autentikasi QR Code terintegrasi database PostgreSQL Supabase.
 
-Proyek ini dibangun menggunakan Vanilla JavaScript (ES6 Modules) dengan arsitektur SOLID, dipadukan dengan **Vite.js** sebagai build tool modern untuk performa tinggi dan kemudahan deployment ke platform cloud seperti **Vercel**.
+Proyek ini dibangun menggunakan Vanilla JavaScript (ES6 Modules) dengan arsitektur SOLID, dipadukan dengan **Vite.js** sebagai build tool modern untuk performa tinggi dan kemudahan deployment ke platform cloud seperti **Vercel** serta database **Supabase**.
 
 ---
 
