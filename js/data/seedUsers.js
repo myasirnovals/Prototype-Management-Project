@@ -1,22 +1,22 @@
 /**
  * Default Seeded Users - Project Management Portal
- * Template pengguna awal yang bersih dan generik untuk tim proyek.
+ * Template pengguna awal yang bersih: Hanya Admin.
  */
 export const DEFAULT_SEEDED_USERS = [
   {
     id: "usr-001",
     username: "@admin",
-    fullName: "Project Lead",
+    fullName: "Admin",
     role: "admin",
     nip: "001",
-    position: "Project Lead",
+    position: "Project Administrator",
     school: "",
-    assignedProjectId: "proj-main",
-    assignedWorkspace: "workspace-capstone",
-    assignedBoardName: "Capstone Board",
-    assignedProjects: ["proj-main"],
-    assignedBoardNames: ["Capstone Board"],
-    workspaceAccess: ["workspace-capstone", "proj-main"],
+    assignedProjectId: "",
+    assignedWorkspace: "",
+    assignedBoardName: "",
+    assignedProjects: [],
+    assignedBoardNames: [],
+    workspaceAccess: [],
     assignedTaskId: "all",
     assignedTaskTitle: "Seluruh Papan (Semua Tugas)",
     device: "Belum Terikat",
@@ -25,51 +25,5 @@ export const DEFAULT_SEEDED_USERS = [
     telegramId: "",
     apiDeposit: "",
     qr_data: "@admin"
-  },
-  {
-    id: "usr-002",
-    username: "@pm",
-    fullName: "Project Manager",
-    role: "manajement-project",
-    nip: "002",
-    position: "Project Manager",
-    school: "",
-    assignedProjectId: "proj-main",
-    assignedWorkspace: "workspace-capstone",
-    assignedBoardName: "Capstone Board",
-    assignedProjects: ["proj-main"],
-    assignedBoardNames: ["Capstone Board"],
-    workspaceAccess: ["workspace-capstone", "proj-main"],
-    assignedTaskId: "all",
-    assignedTaskTitle: "Seluruh Papan (Semua Tugas)",
-    device: "Belum Terikat",
-    isDeviceBound: false,
-    telegramChat: "",
-    telegramId: "",
-    apiDeposit: "",
-    qr_data: "@pm"
-  },
-  {
-    id: "usr-003",
-    username: "@member",
-    fullName: "Team Member",
-    role: "user",
-    nip: "003",
-    position: "Software Developer",
-    school: "",
-    assignedProjectId: "proj-main",
-    assignedWorkspace: "workspace-capstone",
-    assignedBoardName: "Capstone Board",
-    assignedProjects: ["proj-main"],
-    assignedBoardNames: ["Capstone Board"],
-    workspaceAccess: ["workspace-capstone", "proj-main"],
-    assignedTaskId: "all",
-    assignedTaskTitle: "Seluruh Papan (Semua Tugas)",
-    device: "Belum Terikat",
-    isDeviceBound: false,
-    telegramChat: "",
-    telegramId: "",
-    apiDeposit: "",
-    qr_data: "@member"
   }
 ];

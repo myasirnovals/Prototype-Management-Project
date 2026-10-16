@@ -6,18 +6,18 @@ export class CalendarEvent {
     id,
     title,
     description = '',
-    pillar = 'ruangkreasi', // 'ruangkreasi' | 'layarbaca' | 'aikreativ' | 'panen-kunci' | 'sharinginaja'
-    date = '2026-09-11',
-    dayName = 'Jumat',
-    time = '10:00 - 12:00 WIB',
-    pic = 'Sari Rahmawati',
-    location = 'Posko Satelit Bundaran HI',
-    status = 'live', // 'selesai' | 'live' | 'menunggu' | 'rescheduled'
-    badge = 'Audit Kritis',
-    taskRef = '#RK-304',
+    pillar = 'main',
+    date = '',
+    dayName = '',
+    time = '',
+    pic = 'Admin',
+    location = '',
+    status = 'menunggu', // 'selesai' | 'live' | 'menunggu' | 'rescheduled'
+    badge = 'Jadwal',
+    taskRef = '',
     isHero = false,
-    resolution = '3840 x 2160 (16:9 4K)',
-    passRate = '98%'
+    resolution = '',
+    passRate = ''
   }) {
     this.id = id;
     this.title = title;

@@ -7,13 +7,13 @@ export class Task {
     code,
     title,
     description = '',
-    workspace = 'ruangkreasi',
-    board = 'kampanye-q3',
-    status = 'in-progress', // 'backlog' | 'in-progress' | 'review-qa' | 'ready-launch' | 'done'
+    workspace = 'main',
+    board = 'sprint-1',
+    status = 'backlog', // 'backlog' | 'in-progress' | 'review-qa' | 'ready-launch' | 'done'
     priority = 'Medium',   // 'Low' | 'Medium' | 'High' | 'Critical'
-    pic = { name: 'Sari Rahmawati', avatar: '', initials: 'SR' },
-    timeline = '19 - 25 Ags',
-    hours = 8,
+    pic = { name: 'Admin', avatar: '', initials: 'AD' },
+    timeline = '',
+    hours = 0,
     assets = [],
     attachments = [],
     qaProgress = { passed: 0, total: 4 },

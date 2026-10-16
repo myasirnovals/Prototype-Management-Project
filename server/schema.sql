@@ -75,12 +75,10 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE INDEX IF NOT EXISTS idx_users_role ON users(role);
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 
--- Seed Pengguna Awal
+-- Seed Pengguna Awal (Hanya Admin)
 INSERT INTO users (id, name, role, title, jobdesk, email, avatar, workspace_access, qr_data)
 VALUES 
-  ('usr-001', 'Project Lead', 'admin', 'Project Lead', 'Lead & Koordinator Proyek', 'admin@project.local', '', '["workspace-capstone", "proj-main"]'::jsonb, '@admin'),
-  ('usr-002', 'Project Manager', 'manajement-project', 'Project Manager', 'Sprint Coordinator', 'pm@project.local', '', '["workspace-capstone", "proj-main"]'::jsonb, '@pm'),
-  ('usr-003', 'Team Member', 'user', 'Software Developer', 'Pengembang Perangkat Lunak', 'member@project.local', '', '["workspace-capstone", "proj-main"]'::jsonb, '@member')
+  ('usr-001', 'Admin', 'admin', 'Administrator', 'Project Administrator', 'admin@project.local', '', '[]'::jsonb, '@admin')
 ON CONFLICT (id) DO UPDATE SET
   name = EXCLUDED.name,
   role = EXCLUDED.role,

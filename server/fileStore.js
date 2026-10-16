@@ -15,88 +15,8 @@ if (!fs.existsSync(DATA_DIR)) {
 }
 
 // Inisialisasi seed tasks default jika belum ada
-const DEFAULT_SEED_TASKS = [
-  {
-    id: 'task-pk-01',
-    code: '#PK-401',
-    title: 'Konfigurasi Redis Cache & Auth Microservice OAuth2',
-    description: 'Optimasi token validation store ke Redis cluster dengan target latensi <5ms.',
-    workspace: 'panen-kunci',
-    board: 'backend-core',
-    status: 'in-progress',
-    priority: 'High',
-    pic: { name: 'Kevin Santoso', initials: 'KS', role: 'DevOps & Security' },
-    timeline: '18 - 24 Sep',
-    hours: 22,
-    qaProgress: { passed: 2, total: 4 },
-    isStarred: false,
-    updatedAt: Date.now()
-  },
-  {
-    id: 'task-pk-02',
-    code: '#PK-402',
-    title: 'Audit Keamanan Penetration Testing Multi-Tenant',
-    description: 'Verifikasi isolasi database tenant dan enkripsi data at rest AES-256.',
-    workspace: 'panen-kunci',
-    board: 'backend-core',
-    status: 'review-qa',
-    priority: 'Critical',
-    pic: { name: 'Kevin Santoso', initials: 'KS', role: 'DevOps & Security' },
-    timeline: '20 - 26 Sep',
-    hours: 18,
-    qaProgress: { passed: 3, total: 4 },
-    isStarred: false,
-    updatedAt: Date.now()
-  },
-  {
-    id: 'task-pk-03',
-    code: '#PK-403',
-    title: 'Pemeriksaan SLA & Integrasi Payment Gateway SaaS',
-    description: 'Pengujian webhook callback redundan untuk transaksi otomatis.',
-    workspace: 'panen-kunci',
-    board: 'backend-core',
-    status: 'ready-launch',
-    priority: 'High',
-    pic: { name: 'Budi Pratama', initials: 'BP', role: 'QA Lead' },
-    timeline: '22 - 28 Sep',
-    hours: 16,
-    qaProgress: { passed: 4, total: 4 },
-    isStarred: false,
-    updatedAt: Date.now()
-  },
-  {
-    id: 'task-pk-04',
-    code: '#PK-404',
-    title: 'Setup Monitoring Datadog & CloudWatch Alerts',
-    description: 'Pemberitahuan otomatis saat latency API melebihi threshold 200ms.',
-    workspace: 'panen-kunci',
-    board: 'backend-core',
-    status: 'done',
-    priority: 'Medium',
-    pic: { name: 'Kevin Santoso', initials: 'KS', role: 'DevOps & Security' },
-    timeline: '10 - 15 Sep',
-    hours: 12,
-    qaProgress: { passed: 4, total: 4 },
-    isStarred: false,
-    updatedAt: Date.now()
-  },
-  {
-    id: 'task-pk-05',
-    code: '#PK-405',
-    title: 'Dokumentasi OpenAPI & Swagger RESTful Endpoints',
-    description: 'Penyusunan panduan integrasi third-party API untuk mitra platform.',
-    workspace: 'panen-kunci',
-    board: 'backend-core',
-    status: 'backlog',
-    priority: 'Medium',
-    pic: { name: 'Sari Rahmawati', initials: 'SR', role: 'Creative Lead' },
-    timeline: '25 - 30 Sep',
-    hours: 14,
-    qaProgress: { passed: 0, total: 3 },
-    isStarred: false,
-    updatedAt: Date.now()
-  }
-];
+const DEFAULT_SEED_TASKS = [];
+
 
 function readJsonFile(filePath, defaultVal) {
   try {
@@ -162,14 +82,14 @@ export const fileStore = {
 
     const taskObj = {
       id,
-      code: taskData.code || `#PK-${Math.floor(100 + Math.random() * 900)}`,
+      code: taskData.code || `#TASK-${Math.floor(100 + Math.random() * 900)}`,
       title: taskData.title || 'Tugas Baru',
       description: taskData.description || '',
-      workspace: taskData.workspace || 'panen-kunci',
-      board: taskData.board || 'backend-core',
+      workspace: taskData.workspace || 'main',
+      board: taskData.board || 'sprint-1',
       status: taskData.status || 'in-progress',
       priority: taskData.priority || 'Medium',
-      pic: taskData.pic || { name: 'Kevin Santoso', initials: 'KS', role: 'DevOps & Security' },
+      pic: taskData.pic || { name: 'Admin', initials: 'AD', role: 'admin' },
       timeline: taskData.timeline || '',
       hours: Number(taskData.hours) || 0,
       assets: taskData.assets || [],

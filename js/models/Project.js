@@ -41,12 +41,9 @@ export class Project {
     this.priority = priority;
     this.startDate = startDate || 'Sep 2026';
     this.dueDate = dueDate || 'Okt 2026';
-    this.members = members.length > 0 ? members : [
-      { name: 'Sari Rahmawati', initials: 'SR', role: 'Lead' },
-      { name: 'Bagas Wicaksono', initials: 'BW', role: 'Design' }
-    ];
-    this.tasksCount = tasksCount;
-    this.budget = budget || 'Rp 45.000.000';
+    this.members = Array.isArray(members) ? members : [];
+    this.tasksCount = tasksCount || { total: 0, completed: 0 };
+    this.budget = budget || '';
     this.createdAt = createdAt;
   }
 }

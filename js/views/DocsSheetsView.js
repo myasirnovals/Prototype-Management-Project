@@ -43,6 +43,30 @@ export class DocsSheetsView extends BaseView {
     const projects = this.getProjects();
     const currentProject = this.getCurrentProject();
 
+    if (!currentProject) {
+      return `
+        <div class="flex flex-col w-full px-4 sm:px-6 md:px-spacing-2xl pt-4 pb-spacing-3xl">
+          <div class="flex flex-col gap-2 mb-4">
+            <h1 class="font-headline-lg text-[18px] sm:text-[20px] text-white font-bold tracking-tight">
+              Pusat Dokumen &amp; Lembar Kerja
+            </h1>
+            <p class="font-caption-meta text-[11px] text-white/70">
+              Kanvas SOP teknis, inventaris, dan lembar kalkulasi kerja proyek.
+            </p>
+          </div>
+          <div class="w-full bg-surface-container-lowest rounded-2xl shadow-sm border border-surface-border p-12 flex flex-col items-center justify-center text-center gap-3">
+            <div class="w-12 h-12 rounded-full bg-surface-container-low flex items-center justify-center text-text-muted">
+              <span class="material-symbols-outlined text-[28px]">description</span>
+            </div>
+            <h3 class="font-headline-md text-[16px] font-bold text-text-primary">Belum Ada Dokumen Proyek</h3>
+            <p class="font-caption-meta text-xs text-text-secondary max-w-sm">
+              Belum ada berkas SOP atau lembar kerja yang terdaftar di proyek ini.
+            </p>
+          </div>
+        </div>
+      `;
+    }
+
     return `
       <div class="flex flex-col w-full px-4 sm:px-6 md:px-spacing-2xl pt-4 pb-spacing-3xl">
         

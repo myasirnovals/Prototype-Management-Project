@@ -13,37 +13,47 @@ export class NewTaskModal extends BaseModal {
   }
 
   getRegisteredMembers() {
-    const defaultMembers = [
-      { name: 'Sari Rahmawati', initials: 'SR', role: 'Creative Lead' },
-      { name: 'Bagas Wicaksono', initials: 'BW', role: 'Graphic Specialist' },
-      { name: 'Farhan Maulana', initials: 'FM', role: 'AI Researcher' },
-      { name: 'Kevin Santoso', initials: 'KS', role: 'DevOps & Security' },
-      { name: 'Dina Lestari', initials: 'DL', role: 'UI Specialist' },
-      { name: 'Budi Pratama', initials: 'BP', role: 'QA Lead' },
-      { name: 'Dimas Anggara', initials: 'DA', role: 'Creative Specialist' }
-    ];
     try {
+      const managed = JSON.parse(localStorage.getItem('creative_office_managed_users') || '[]');
+      if (Array.isArray(managed) && managed.length > 0) {
+        return managed.map(u => ({
+          name: u.fullName || u.name || u.username,
+          initials: (u.fullName || u.name || u.username || 'AD').split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase(),
+          role: u.role || 'Member'
+        }));
+      }
       const custom = JSON.parse(localStorage.getItem('team_members') || '[]');
-      return [...custom, ...defaultMembers];
-    } catch (e) {
-      return defaultMembers;
-    }
+      if (Array.isArray(custom) && custom.length > 0) {
+        return custom;
+      }
+    } catch (e) {}
+    return [
+      { name: 'Admin', initials: 'AD', role: 'Project Administrator' }
+    ];
   }
 
   getWorkspacesList() {
-    const defaultWs = [
-      { id: 'ruangkreasi', title: 'RuangKreasi (Studio Dev)' },
-      { id: 'layarbaca', title: 'LayarBaca (Produk)' },
-      { id: 'aikreativ', title: 'AIKreativ (Studio)' },
-      { id: 'panen-kunci', title: 'Panen Kunci (SaaS)' },
-      { id: 'sharinginaja', title: 'Sharinginaja (Cloud)' }
-    ];
     try {
+      const projs = JSON.parse(localStorage.getItem('creative_office_projects') || '[]');
       const custom = JSON.parse(localStorage.getItem('custom_workspaces') || '[]');
-      const formatted = custom.map(c => ({ id: c.id, title: `${c.title} (Baru)` }));
-      return [...formatted, ...defaultWs];
+      const list = [];
+      if (Array.isArray(projs)) {
+        projs.forEach(p => {
+          if (p && (p.id || p.workspace)) {
+            list.push({ id: p.workspace || p.id, title: p.name || p.title || p.id });
+          }
+        });
+      }
+      if (Array.isArray(custom)) {
+        custom.forEach(c => {
+          if (c && c.id && !list.some(l => l.id === c.id)) {
+            list.push({ id: c.id, title: c.title || c.name || c.id });
+          }
+        });
+      }
+      return list;
     } catch (e) {
-      return defaultWs;
+      return [];
     }
   }
 
@@ -779,7 +789,7 @@ export class NewTaskModal extends BaseModal {
 
         const timelineStr = `${formatDayMonth(startDate)} – ${formatDayMonth(endDate)}`;
 
-        let picVal = modalRoot.querySelector('#new-task-pic')?.value || 'Sari Rahmawati|SR|Creative Lead';
+        let picVal = modalRoot.querySelector('#new-task-pic')?.value || 'Admin|AD|Project Administrator';
         let picName, picInitials, picRole;
 
         if (picVal === '__new_member__') {
@@ -814,9 +824,9 @@ export class NewTaskModal extends BaseModal {
               console.warn('Gagal menyimpan anggota baru:', err);
             }
           } else {
-            picName = 'Sari Rahmawati';
-            picInitials = 'SR';
-            picRole = 'Creative Lead';
+            picName = 'Admin';
+            picInitials = 'AD';
+            picRole = 'Project Administrator';
           }
         } else {
           [picName, picInitials, picRole] = picVal.split('|');

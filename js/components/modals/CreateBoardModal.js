@@ -700,41 +700,7 @@ export class CreateBoardModal extends BaseModal {
 
           localStorage.setItem('active_project_id', newProject.id);
 
-          // 2. Initialize starter cards in TaskService
-          if (this.taskService) {
-            const prefix = name.split(/\s+/).map(w => w[0]).join('').toUpperCase().slice(0, 3) || 'PRJ';
-            this.taskService.addTask({
-              code: `#${prefix}-101`,
-              title: `Kickoff & Ruang Lingkup: ${name}`,
-              description: description,
-              workspace: newWorkspaceId,
-              board: 'sprint-1',
-              projectId: newProject.id,
-              status: 'in-progress',
-              priority: priority,
-              pic: { name: 'Sari Rahmawati', initials: 'SR', role: 'Creative Lead' },
-              timeline: `${dueDate} (Fase Inisiasi)`,
-              hours: 16,
-              qaProgress: { passed: 1, total: 3 },
-              tags: ['Inisiasi', 'Baru']
-            });
 
-            this.taskService.addTask({
-              code: `#${prefix}-102`,
-              title: `Penyusunan Rencana Kerja & Kebutuhan Ruang Kerja ${name}`,
-              description: 'Setup kebutuhan kolaborasi, pembagian tugas anggota, dan milestone utama.',
-              workspace: newWorkspaceId,
-              board: 'sprint-1',
-              projectId: newProject.id,
-              status: 'backlog',
-              priority: 'Medium',
-              pic: { name: 'Bagas Wicaksono', initials: 'BW', role: 'Design Specialist' },
-              timeline: dueDate,
-              hours: 12,
-              qaProgress: { passed: 0, total: 2 },
-              tags: ['Perencanaan']
-            });
-          }
 
           // 3. Close modal
           this.modalManager.close(this.modalId);

@@ -17,44 +17,27 @@ export class TaskDetailModal extends BaseModal {
     this.activeTab = 'visual'; // 'visual' | 'logs' | 'legal'
     this.currentTask = null;
     this.isEditMode = false;
-    this.comments = [
-      {
-        author: 'Sari Rahmawati',
-        role: 'Creative Lead',
-        time: '10:45 WIB',
-        text: 'Kecerahan nits stabil di 7,500 nits, tidak ada ghosting saat perpindahan frame 60fps. Menunggu final pass redundansi CDN.'
-      },
-      {
-        author: 'Budi Pratama',
-        role: 'QA OOH Field Tech',
-        time: '10:15 WIB',
-        text: 'Uji visibilitas jarak 75m dari Flyover Antasari lolos. Tipografi tajam dan terbaca jelas pada kecepatan berkendara 50 km/jam.'
-      },
-      {
-        author: 'Bpk. Hendro',
-        role: 'Dinas Perhubungan DKI',
-        time: '09:30 WIB',
-        text: 'Inspeksi penataan titik reklame outdoor rampung. Rekomendasi teknis SK-8812 sah dan telah diunggah ke portal.'
-      }
-    ];
+    this.comments = [];
   }
 
   getRegisteredMembers() {
-    const defaultMembers = [
-      { name: 'Sari Rahmawati', initials: 'SR', role: 'Creative Lead' },
-      { name: 'Bagas Wicaksono', initials: 'BW', role: 'Graphic Specialist' },
-      { name: 'Farhan Maulana', initials: 'FM', role: 'AI Researcher' },
-      { name: 'Kevin Santoso', initials: 'KS', role: 'DevOps & Security' },
-      { name: 'Dina Lestari', initials: 'DL', role: 'UI Specialist' },
-      { name: 'Budi Pratama', initials: 'BP', role: 'QA Lead' },
-      { name: 'Dimas Anggara', initials: 'DA', role: 'Creative Specialist' }
-    ];
     try {
+      const managed = JSON.parse(localStorage.getItem('creative_office_managed_users') || '[]');
+      if (Array.isArray(managed) && managed.length > 0) {
+        return managed.map(u => ({
+          name: u.fullName || u.name || u.username,
+          initials: (u.fullName || u.name || u.username || 'AD').split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase(),
+          role: u.role || 'Member'
+        }));
+      }
       const custom = JSON.parse(localStorage.getItem('team_members') || '[]');
-      return [...custom, ...defaultMembers];
-    } catch (e) {
-      return defaultMembers;
-    }
+      if (Array.isArray(custom) && custom.length > 0) {
+        return custom;
+      }
+    } catch (e) {}
+    return [
+      { name: 'Admin', initials: 'AD', role: 'Project Administrator' }
+    ];
   }
 
   _escapeHtml(str) {
@@ -269,7 +252,7 @@ export class TaskDetailModal extends BaseModal {
                     ${task.pic?.initials || (picName ? picName.slice(0, 2).toUpperCase() : 'PIC')}
                   </div>
                 `}
-                <span class="font-body-medium text-[13px] text-text-primary font-semibold truncate">${task.assignee || task.pic?.name || 'Dimas Anggara (User)'}</span>
+                <span class="font-body-medium text-[13px] text-text-primary font-semibold truncate">${task.assignee || task.pic?.name || 'Admin'}</span>
               </div>
               <span class="font-caption-meta text-[11px] text-text-secondary">Status Task: <strong class="capitalize text-primary">${task.status}</strong></span>
             </div>
@@ -1501,8 +1484,8 @@ export class TaskDetailModal extends BaseModal {
         this.currentTask.qaStatus = 'testing';
         const authUser = this.container.resolve('AuthService').getCurrentUser();
         this.comments.unshift({
-          author: authUser ? authUser.name : 'Dimas Anggara (User)',
-          role: 'Contributor',
+          author: authUser ? authUser.name : 'Admin',
+          role: authUser?.role || 'Contributor',
           time: 'Baru saja',
           text: '📤 User mengunggah hasil pekerjaan & mengirimkan task ke QA untuk diuji.'
         });
@@ -1519,10 +1502,10 @@ export class TaskDetailModal extends BaseModal {
       uploadWorkBtn.addEventListener('click', () => {
         const authUser = this.container.resolve('AuthService').getCurrentUser();
         this.comments.unshift({
-          author: authUser ? authUser.name : 'Dimas Anggara (User)',
-          role: 'Contributor',
+          author: authUser ? authUser.name : 'Admin',
+          role: authUser?.role || 'Contributor',
           time: 'Baru saja',
-          text: '📎 Berkas deliverables baru telah diunggah: [Final_Render_4K_V2.mp4]'
+          text: '📎 Berkas deliverables baru telah diunggah.'
         });
         if (this.notificationService) {
           this.notificationService.success('Hasil pekerjaan / deliverable berhasil diunggah.');
@@ -1550,8 +1533,8 @@ export class TaskDetailModal extends BaseModal {
       escalateBtn.addEventListener('click', () => {
         const authUser = this.container.resolve('AuthService').getCurrentUser();
         this.comments.unshift({
-          author: authUser ? authUser.name : 'Dimas Anggara (User)',
-          role: 'Contributor',
+          author: authUser ? authUser.name : 'Admin',
+          role: authUser?.role || 'Contributor',
           time: 'Baru saja',
           text: '⚠️ LAPORAN KENDALA: Diperlukan bantuan eskalasi teknis pada titik integrasi.'
         });

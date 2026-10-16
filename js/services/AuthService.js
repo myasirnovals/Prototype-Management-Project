@@ -18,53 +18,24 @@ export class AuthService {
     // Role profiles: Admin, Manajement Project, QA, User
     const adminUser = new User({
       id: 'usr-001',
-      name: 'Dr. Hendra Wijaya',
+      username: '@admin',
+      name: 'Admin',
       role: 'admin',
-      title: 'Admin & Managing Director',
-      avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCs4GAAnGL_NHUUPqYj0DsaZfgUJ0aJqIfPALjUmgjIwshL2vKcWW1QxiECnTWYmy_gKEsorDZKRlitEXHTELFWCF2lnRdTxXPmDeQYKdyGkqR3nsE6I_aDuKoI2cPL5cVEsklM_qSX2Wnfjgs6327TJeHJMGlnraOZoJtjaJSbz488P9Kd_SGyHmmUieIr_VKl6Ym0ogBpgVhEF2RItwHr0k9GSset-BVhn3nAeGu7qpmWBRe51w-v',
-      email: 'admin@project.local',
-      workspaceAccess: ['ruangkreasi', 'layarbaca', 'aikreativ', 'panen-kunci', 'sharinginaja']
-    });
-
-    const pmUser = new User({
-      id: 'usr-002',
-      name: 'Sari Rahmawati',
-      role: 'manajement-project',
-      title: 'Project Manager & Operations Lead',
-      avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDtNieDrWnyDLMJXqM3DvOAGysS0-_-4mKZ9MeMc4v16u3TioliYvbQ8drEkBixw2pPn4LdcCGmEl82fy_4_TNOdQAFZlU8Ob19hCqTzAx_nFA7YMgISKHYVQQg0oQxg7VZ-zVeIylVe0vw9lcKD6kPPY6e4aoCjgAH0HT9qS8CetUaPi8c7IuLlUfKsLZsTQypHjtfUoRrhQ6cpoJ0OjA5Jz96RuIWZZOf37_qSRW1S2d3g-esoO4_',
-      email: 'pm@project.local',
-      workspaceAccess: ['ruangkreasi', 'layarbaca', 'aikreativ', 'panen-kunci']
-    });
-
-    const qaUser = new User({
-      id: 'usr-003',
-      name: 'Budi Pratama',
-      role: 'qa',
-      title: 'QA Lead (Quality Assurance)',
-      avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCkPYCmDB7ywNtTdvprqh9zeMhpfv9MxlkrN24s3xJOsa3z9onO_aY9EelsqGsv9ZrrEzZ56XOo7rFakJbUaP0lOnGkvPPxXVxhbaOKeMdgtY2RfSVw06ySE2-e9PBVb5QZT6H9CwjAI1CMupo9GrWobSHMyhmLPrP-AltvEFdf5E9TH9vF8WXrBieBz3hhFUbjzghoqYnaJspp3ModNNGh7wDMk8Lu1kvidFmkNwvedyQNf1zDlGJz',
-      email: 'qa@project.local',
-      workspaceAccess: ['panen-kunci', 'aikreativ', 'ruangkreasi']
-    });
-
-    const regularUser = new User({
-      id: 'usr-004',
-      name: 'Dimas Anggara',
-      role: 'user',
-      title: 'Creative Specialist & Contributor',
+      title: 'Administrator',
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=256&q=80',
-      email: 'member@project.local',
-      workspaceAccess: ['ruangkreasi', 'layarbaca']
+      email: 'admin@project.local',
+      workspaceAccess: []
     });
 
     this.roleProfiles = {
       admin: adminUser,
-      'manajement-project': pmUser,
-      qa: qaUser,
-      user: regularUser,
+      'manajement-project': adminUser,
+      qa: adminUser,
+      user: adminUser,
       // Backward compatibility aliases
       eksekutif: adminUser,
-      kreatif: pmUser,
-      teknis: qaUser
+      kreatif: adminUser,
+      teknis: adminUser
     };
 
     // Hydrate role profiles with any previously saved custom edits so they persist across sessions
@@ -104,7 +75,7 @@ export class AuthService {
     if (!username || !password) return false;
     const cleanUsn = String(username).trim().toLowerCase();
     const cleanPwd = String(password).trim();
-    return (cleanUsn === 'admin' || cleanUsn === 'lead') && (cleanPwd === 'admin123' || cleanPwd === 'admin');
+    return (cleanUsn === 'admin' || cleanUsn === 'lead' || cleanUsn === '@admin') && (cleanPwd === 'admin123' || cleanPwd === 'admin');
   }
 
   /**
@@ -550,15 +521,8 @@ export class AuthService {
     const role = (user.role || localStorage.getItem('active_user_role') || 'admin').toLowerCase();
     const isAdmin = role === 'admin';
 
-    // Core catalog of known projects with standardized IDs and aliases
-    const coreCatalog = [
-      { id: 'proj-1790146409036-876', slug: 'panen-kunci-9036', aliases: ['panen-kunci', 'panenkunci', 'panan'], name: 'Panen Kunci', workspace: 'panen-kunci', code: 'PK', category: 'SaaS & Infrastruktur', icon: '🌾' },
-      { id: 'proj-1790146434093-686', slug: 'creativoffice-4093', aliases: ['creativoffice', 'creativeoffice', 'creativ', 'creative'], name: 'Creative Office', workspace: 'creativoffice', code: 'CO', category: 'Creative Hub', icon: '💼' },
-      { id: 'proj-1790146459019-450', slug: 'aikreativ-9019', aliases: ['aikreativ', 'aikreasi', 'ai'], name: 'AIKreativ', workspace: 'aikreativ', code: 'AI', category: 'AI & Otomasi', icon: '🤖' },
-      { id: 'proj-1790146474472-592', slug: 'sharinginaja-4472', aliases: ['sharinginaja', 'sharing'], name: 'Sharinginaja', workspace: 'sharinginaja', code: 'SH', category: 'Cloud Asset Hub', icon: '☁️' },
-      { id: 'proj-1790146495006-9', slug: 'ruangkreasi-5006', aliases: ['ruangkreasi', 'kreasi'], name: 'Ruang Kreasi', workspace: 'ruangkreasi', code: 'RK', category: 'Creative Studio', icon: '🎨' },
-      { id: 'proj-1790146512680-427', slug: 'layarbaca-2680', aliases: ['layarbaca', 'layar'], name: 'LayarBaca', workspace: 'layarbaca', code: 'LB', category: 'Media & Publikasi', icon: '📖' }
-    ];
+    // Core catalog of known projects (dynamically populated from storage/database)
+    const coreCatalog = [];
 
     // Helper to resolve board info from all available sources
     const resolveBoard = (rawId, nameHint = null) => {
@@ -674,14 +638,27 @@ export class AuthService {
 
     // If Admin, all projects are allowed
     if (isAdmin) {
-      const allBoards = coreCatalog.map(c => ({
-        id: c.id,
-        name: c.name,
-        workspace: c.workspace,
-        code: c.code,
-        category: c.category,
-        icon: c.icon
-      }));
+      const allBoards = [];
+      try {
+        const rawProjs = localStorage.getItem('creative_office_projects');
+        if (rawProjs) {
+          const projs = JSON.parse(rawProjs);
+          if (Array.isArray(projs)) {
+            projs.forEach(p => {
+              if (p && (p.name || p.title)) {
+                allBoards.push({
+                  id: p.id || p.workspace,
+                  name: p.name || p.title,
+                  workspace: p.workspace || p.id,
+                  code: p.code || 'PRJ',
+                  category: p.category || 'Papan Proyek',
+                  icon: p.icon || '📋'
+                });
+              }
+            });
+          }
+        }
+      } catch (e) {}
       try {
         const customWs = JSON.parse(localStorage.getItem('custom_workspaces') || '[]');
         customWs.forEach(w => {

@@ -17,64 +17,7 @@ export class DocumentService {
   }
 
   initDefaultDocuments() {
-    this.documents = [
-      new LegalDocument({
-        id: 'doc-dishub',
-        title: 'Surat Rekomendasi Penyelenggaraan Reklame LED OOH',
-        issuer: 'Dinas Perhubungan (Dishub) Provinsi DKI Jakarta',
-        skNumber: 'SK-Dishub/8812/Reklame/VIII/2024',
-        fileType: 'PDF',
-        fileSize: '3.8 MB',
-        status: 'Valid & Terverifikasi',
-        expiry: '31 Agustus 2024',
-        officer: 'Bpk. Hendro Wibowo, S.T., M.T. (Staf Teknis Dishub)',
-        qrId: 'GOV-DKI-99214A',
-        icon: 'description',
-        pages: 2
-      }),
-      new LegalDocument({
-        id: 'doc-satpol-pp',
-        title: 'Izin Penataan & Keamanan Lokasi Titik Ruang Terbuka',
-        issuer: 'Satuan Polisi Pamong Praja (Satpol PP) DKI Jakarta',
-        skNumber: 'SPP-DKI/B-409/VIII/2024',
-        fileType: 'PDF',
-        fileSize: '2.4 MB',
-        status: 'Valid & Terverifikasi',
-        expiry: '31 Agustus 2024',
-        officer: 'Bpk. Rizal Fahreza, S.Sos (Kasi Operasional)',
-        qrId: 'SATPOL-DKI-88219B',
-        icon: 'security',
-        pages: 2
-      }),
-      new LegalDocument({
-        id: 'doc-slf',
-        title: 'Sertifikat Kelayakan Konstruksi & Rangka LED (SLF)',
-        issuer: 'Dinas Cipta Karya, Tata Ruang & Pertanahan & Balai Uji Independen',
-        skNumber: 'SLF-DKI/RANGKA-BAJA/2024/099',
-        fileType: 'PDF',
-        fileSize: '5.1 MB',
-        status: 'Aktif s/d 2025',
-        expiry: '28 Februari 2025',
-        officer: 'Ir. Danang Prasetyo, IPM (Konsultan Struktur)',
-        qrId: 'SLF-BKG-2024-4411',
-        icon: 'construction',
-        pages: 3
-      }),
-      new LegalDocument({
-        id: 'doc-asuransi',
-        title: 'Polis Asuransi Tanggung Gugat Pihak Ketiga (Public Liability)',
-        issuer: 'PT Asuransi Mega Pratama Tbk',
-        skNumber: 'POL-PL-OOH-2024-8831',
-        fileType: 'PDF',
-        fileSize: '1.9 MB',
-        status: 'Tertanggung Aktif',
-        expiry: '31 Desember 2024',
-        officer: 'Dewi Anggraini (Underwriting Manager)',
-        qrId: 'INS-MEGA-77123P',
-        icon: 'assured_workload',
-        pages: 2
-      })
-    ];
+    this.documents = [];
   }
 
   getDocuments() {

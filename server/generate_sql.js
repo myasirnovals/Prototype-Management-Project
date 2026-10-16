@@ -31,7 +31,7 @@ ALTER TABLE IF EXISTS public.users ADD COLUMN IF NOT EXISTS qr_data VARCHAR(255)
 ALTER TABLE IF EXISTS public.users ADD COLUMN IF NOT EXISTS workspace_access JSONB;
 ALTER TABLE IF EXISTS public.users ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT NOW();\n\n`;
 
-sql += `-- 2. INJEKSI 6 PAPAN PROYEK UTAMA (projects)\n`;
+sql += `-- 2. INJEKSI PAPAN PROYEK (projects: ${projects.length})\n`;
 for (const p of projects) {
   const code = (p.code || '').replace(/'/g, "''");
   const name = (p.name || '').replace(/'/g, "''");
@@ -52,7 +52,7 @@ for (const p of projects) {
   sql += `ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, description = EXCLUDED.description, workspace = EXCLUDED.workspace, tasks_count = EXCLUDED.tasks_count, updated_at = NOW();\n\n`;
 }
 
-sql += `-- 3. INJEKSI 7 PENGGUNA TERDAFTAR (users)\n`;
+sql += `-- 3. INJEKSI PENGGUNA TERDAFTAR (users: ${users.length})\n`;
 for (const u of users) {
   const fn = (u.fullName || u.name || '').replace(/'/g, "''");
   const un = (u.username || '').replace(/'/g, "''");
@@ -74,7 +74,7 @@ for (const u of users) {
   sql += `ON CONFLICT (id) DO UPDATE SET full_name = EXCLUDED.full_name, name = EXCLUDED.name, username = EXCLUDED.username, role = EXCLUDED.role, position = EXCLUDED.position, assigned_project_id = EXCLUDED.assigned_project_id, assigned_workspace = EXCLUDED.assigned_workspace, assigned_board_name = EXCLUDED.assigned_board_name, assigned_task_id = EXCLUDED.assigned_task_id, assigned_task_title = EXCLUDED.assigned_task_title, updated_at = NOW();\n\n`;
 }
 
-sql += `-- 4. INJEKSI 31 TUGAS KANBAN (tasks)\n`;
+sql += `-- 4. INJEKSI TUGAS KANBAN (tasks: ${tasks.length})\n`;
 for (const t of tasks) {
   const code = (t.code || '').replace(/'/g, "''");
   const title = (t.title || '').replace(/'/g, "''");
